@@ -1,6 +1,10 @@
 # welcome to the code
 # don't run this file by itself - run the executable
 
+# as of PYAD 1.1.0 this is the source for header functions
+# so not main anymore
+# don't run pretty please
+
 # create a list of absent libraries, yell at the user to install them
 # (this shouldn't be an issue since libraries are automatically added
 # to the executable I made)
@@ -140,7 +144,3 @@ def main():
     os.rename(save, base + ".mp3")
 
     pause(c("\n\nVideo downloaded successfully! ", GREEN+BOLD) + c("Press any key to exit.", GREEN))
-
-# woah, so pythonic
-if __name__ == "__main__":
-    main()
