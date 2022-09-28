@@ -11,9 +11,15 @@ def main():
 
     root = Tk()
     root.title("Python Audio YouTube Downloader")
+    root.geometry("360x240")
+
+    frame = ttk.Frame(root)
+    frame.grid(column=0, row=0, sticky="NW")
+
+    s = ttk.Style().configure("WBStyle",background="black",foreground="white")
 
     l = ttk.Label(root, text="Starting")
-    l.grid()
+    l.place(relx=0.5, rely=0.5, anchor="center")
 
     l.bind('<Enter>', lambda e: l.configure(text='Moved mouse inside'))
     l.bind('<Leave>', lambda e: l.configure(text='Moved mouse outside'))
