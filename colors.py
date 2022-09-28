@@ -1,3 +1,5 @@
+# this is unused
+
 # FOREGROUND
 RED     = "\u001b[38;5;1m"
 ORANGE  = "\u001b[38;5;208m"
