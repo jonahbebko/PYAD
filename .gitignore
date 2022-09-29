@@ -1,10 +1,10 @@
 **/*.exe
 **/*.ico
 **/*.pyc
-poetry.lock
-pyproject.toml
-replit.nix
+**/__pycache__
+**/poetry.lock
+**/pyproject.toml
+**/replit.nix
 venv
 .config
 .replit
-__pychache__
