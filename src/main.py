@@ -1,5 +1,5 @@
-from search import search
-from download import download
+from lib.search import search
+from lib.download import download
 from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
