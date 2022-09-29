@@ -1,5 +1,7 @@
 **/*.exe
 **/*.ico
+poetry.lock
+pyproject.toml
 venv
 .config
 __pychache__
