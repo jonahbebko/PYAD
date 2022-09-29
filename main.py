@@ -2,6 +2,7 @@ import search
 import download
 from tkinter import *
 from tkinter import ttk
+import sv_ttk
 
 def buttonPressed(*args):
 
@@ -18,13 +19,15 @@ def main():
 
     s = ttk.Style().configure("WBStyle",background="black",foreground="white")
 
-    l = ttk.Label(root, text="Starting")
+    l = ttk.Button(root, text="Starting")
     l.place(relx=0.5, rely=0.5, anchor="center")
 
     l.bind('<Enter>', lambda e: l.configure(text='Moved mouse inside'))
     l.bind('<Leave>', lambda e: l.configure(text='Moved mouse outside'))
     l.bind('<ButtonPress-1>', buttonPressed)
 
+    # custom Windows 11-like theme, pretty cool
+    sv_ttk.set_theme("dark")
     root.mainloop()
 
 if __name__ == "__main__":
