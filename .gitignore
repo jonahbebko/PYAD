@@ -2,6 +2,9 @@
 **/*.ico
 poetry.lock
 pyproject.toml
+replit.nix
 venv
 .config
+.replit
 __pychache__
+__pychache__/**
