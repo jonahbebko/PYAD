@@ -4,13 +4,18 @@ from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
     Button,
-    Style
+    Style,
+    Entry,
+    Label
 )
 from tkinter import (
-    Tk
+    Tk,
+    StringVar,
+    PhotoImage,
+    LEFT, RIGHT
 )
 
-def buttonPressed(*args, **kwargs):
+def searchButtonPressed(*args, **kwargs):
 
     print("button pressed")
 
@@ -19,18 +24,32 @@ def main(*args, **kwargs):
     root = Tk()
     root.title("Python Audio YouTube Downloader")
     root.geometry("360x240")
+    root.minsize(width=200, height=600)
+    root.iconphoto(False, PhotoImage(file = "icon.ico"))
 
     frame = Frame(root)
-    frame.grid(column=0, row=0, sticky="NW")
+    frame.pack(fill="x")
 
     s = Style().configure("WBStyle",background="black",foreground="white")
 
-    l = Button(root, text="Starting")
-    l.place(relx=0.5, rely=0.5, anchor="center")
+    searchEntryLabel = Label(frame, text="Search entry or URL:")
+    searchEntryLabel.grid(padx=10, pady=(10,0), row=1, column=1)
 
-    l.bind('<Enter>', lambda e: l.configure(text='Moved mouse inside'))
-    l.bind('<Leave>', lambda e: l.configure(text='Moved mouse outside'))
-    l.bind('<ButtonPress-1>', buttonPressed)
+    searchEntryText = StringVar()
+    searchEntry = Entry(frame, justify=LEFT, textvariable=searchEntryText)
+    searchEntry.grid(padx=10, row=2, column=1)
+    searchEntry.focus()
+
+    numResultsLabel = Label(frame, text="Number of results:")
+    numResultsLabel.grid(padx=10, pady=(10,0), row=3, column=1)
+
+    numResults = StringVar()
+    resultsEntry = Entry(frame, justify=LEFT, textvariable=numResults)
+    resultsEntry.grid(padx=10, row=4, column=1)
+
+    searchButton = Button(text="Search")
+    searchButton.grid(padx=10, row=4, column=2)
+    searchButton.bind('<ButtonPress-1>', searchButtonPressed)
 
     # custom Windows 11-like theme, pretty cool
     set_theme("dark")
