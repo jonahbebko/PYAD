@@ -1,5 +1,4 @@
 **/*.exe
-**/*.ico
 **/*.pyc
 **/__pycache__
 **/poetry.lock
