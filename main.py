@@ -15,13 +15,10 @@ from tkinter import (
 )
 
 try:
-    import pydub, PIL, urllib, pytube, youtubesearchpython
+    import pydub, PIL, urllib, pytube, youtubesearchpython, spotipy
 except ImportError:
     import subprocess
     subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-
-# unimport
-del pydub, PIL, urllib, pytube, youtubesearchpython, subprocess
 
 def resource_path(relative_path):
 

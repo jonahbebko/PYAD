@@ -104,7 +104,6 @@ def text(root, *args, **kwargs):
     root.title("Python Audio YouTube Downloader - Text Mode")
     root.geometry("")
     root.minsize(width=500, height=145)
-    root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
     
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5, pady=10)

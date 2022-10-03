@@ -3,3 +3,4 @@ pillow
 urllib
 pytube
 youtube-search-python
+spotipy
