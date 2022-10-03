@@ -1,25 +1,18 @@
 # Overview
 PYAD (“pie-ad” - Python YouTube Audio Downloader) is an executable written in Python to search for YouTube videos and download them as audio. 
 
+# Usage
+
+Release - unzip `main.zip` and run `PythonYouTubeAudioDownloader.exe`
+
+Source - run `main.py`
+
+# Changelog
+
 PYAD 1.0.0 is a simple console-based executable.
 
 PYAD 2.0.0 is a complete GUI rewrite of 1.0.0, now with tkinter and more formats.
 
-PYAD 2.0.1 (WIP) adds two new features: playlist downloading, and text file downloading.
+PYAD 2.1.0 adds two new features: playlist downloading, and text file downloading.
 
 No rights reserved. Do what you wish.
-
-# Usage
-```./pyad [options]``` or ```python3 main.py [options]```
-
-Options:
-
-`-h` or `--help` - Show help
-
-`-v` or `--version` - Show version
-
-`-b` or `--basic` - Basic mode - download one video
-
-`-p` or `--playlist` - Playlist mode - download from YouTube/Spotify playlist
-
-`-t` or `--text` - Text mode - read line-by-line from text file
