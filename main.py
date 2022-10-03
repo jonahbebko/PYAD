@@ -7,13 +7,17 @@ def main(*args, **kwargs):
 
     if len(sys.argv) == 1 or sys.argv[1] in ["-h", "--help"]:
 
-        print("usage: ./pyad [options]")
-        print("options:")
-        print("  -h,  --help: show this help message")
-        print("  -v,  --version: show version")
-        print("  -b,  --basic: download one file")
-        print("  -p,  --playlist: read from youtube or spotify playlist")
-        print("  -tx, --text: read and download from titles in text file")
+        print("""
+./pyad [options] or python3 main.py [options]
+
+Options:
+    
+    -h or --help - Show this help message
+    -v or --version - Show version
+    -b or --basic - Basic mode - download one video
+    -p or --playlist - Playlist mode - download from YouTube/Spotify playlist
+    -t or --text - Text mode - read line-by-line from text file
+""")
 
     elif sys.argv[1] in ["-v", "version"]:
 
