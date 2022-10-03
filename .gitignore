@@ -1,9 +1,13 @@
 **/*.exe
 **/*.pyc
 **/__pycache__
+**/temp
+**/build
+**/dist
+**/venv
 **/poetry.lock
 **/pyproject.toml
 **/replit.nix
-venv
-.config
-.replit
+**/main.spec
+**/.config
+**/.replit
