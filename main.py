@@ -43,8 +43,8 @@ def close(root, numResults, *args, **kwargs):
 
     for i in range(int(numResults)):
         try:
-            os.remove(f"temp/{i}.png")
-            os.remove(f"temp/{i}c.png")
+            os.remove(resource_path(f"temp/{i}.png"))
+            os.remove(resource_path(f"temp/{i}c.png"))
         except:
             pass
     
@@ -84,11 +84,11 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
 
         f.columnconfigure(2, weight=1)
 
-        urlretrieve(thumbs[i], f"temp/{i}.png")
-        img = ImageTk.PhotoImage(Image.open(f"temp/{i}.png").resize((100, 50)))
+        urlretrieve(thumbs[i], resource_path(f"temp/{i}.png"))
+        img = ImageTk.PhotoImage(Image.open(resource_path(f"temp/{i}.png")).resize((100, 50)))
 
-        urlretrieve(cthumbs[i], f"temp/{i}c.png")
-        cimg = ImageTk.PhotoImage(Image.open(f"temp/{i}c.png").resize((50, 50)))
+        urlretrieve(cthumbs[i], resource_path(f"temp/{i}c.png"))
+        cimg = ImageTk.PhotoImage(Image.open(resource_path(f"temp/{i}c.png")).resize((50, 50)))
 
         identifier = Label(f, text=i, font=("Arial", 24))
         identifier.grid(row=0, column=0, rowspan=3, padx=(10,5), pady=5, sticky="nsw")
@@ -165,7 +165,11 @@ def downloadButtonPressed(audioFormat, numResults, videoSelected, directory, *ar
         messagebox.showerror("Error", "No directory selected.")
         return
     
-    download(idList[int(videoSelected)], directory)
+    try:
+        download(idList[int(videoSelected)], directory)
+    except FileExistsError:
+        messagebox.showerror("Info", "mp3 file already exists in directory.\nThis isn't an error, just letting you know.")
+        pass
 
     # cleanse
     title = (
@@ -176,9 +180,10 @@ def downloadButtonPressed(audioFormat, numResults, videoSelected, directory, *ar
         .replace(" ", "_")
     )
 
+    # convert from mp3 if other format selected
     if audioFormat != "mp3":
-        pydub.AudioSegment.from_file("output.mp3").export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
-        os.remove("output.mp3")
+        pydub.AudioSegment.from_file(resource_path("output.mp3")).export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
+        os.remove(resource_path("output.mp3"))
     
     messagebox.showinfo("Success", "Download complete.")
 
@@ -188,7 +193,7 @@ def main(*args, **kwargs):
     root.title("Python Audio YouTube Downloader")
     root.geometry("")
     root.minsize(width=500, height=250)
-    root.wm_iconphoto(True, PhotoImage(file="img/icon.ico"))
+    root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
     
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5)
@@ -231,7 +236,7 @@ def main(*args, **kwargs):
     selectEntry.grid(row=6, column=0, padx=10, pady=(5,10), sticky="new")
 
     # .subsample is used to resize the image
-    folderPhoto = PhotoImage(file="./img/yellow.png").subsample(16,16)
+    folderPhoto = PhotoImage(file=resource_path("./img/yellow.png")).subsample(16,16)
 
     availableFormats = ["mp3", "wav", "ogg", "flac", "m4a"]
 
