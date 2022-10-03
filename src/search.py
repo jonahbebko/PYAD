@@ -54,7 +54,7 @@ def search(title:str, num:int=None, idsOnly=False, titleOnly=False, playlist=Fal
         if "spotify.com" in title:
 
             return "spotify"
-            # spotify downloading is managed with spdl
+            # spotify downloading is managed with spotdl
         
         elif "youtube.com" in title or "youtu.be" in title:
 

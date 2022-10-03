@@ -5,8 +5,6 @@ import pydub
 from .search import search
 from .download import download
 from sv_ttk import set_theme
-from PIL import Image, ImageTk
-from urllib.request import urlretrieve
 from tkinter.ttk import (
     Frame,
     Button,
@@ -57,7 +55,7 @@ def cleanse(title:str, *args, **kwargs):
 
     return title
 
-def downloadButtonPressed(root, lastLabel, audioFormat, searchEntry, directory, *args, **kwargs):
+def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kwargs):
     
     if searchEntry == "":
         messagebox.showerror("Error", "No playlist entered.")
@@ -107,9 +105,6 @@ def downloadButtonPressed(root, lastLabel, audioFormat, searchEntry, directory, 
             os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
         except FileExistsError:
             messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}, skipping...")
-
-        lastLabel.config(text="Last video downloaded: " + title)
-        lastLabel.update()
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root)
@@ -121,7 +116,7 @@ def playlist(*args, **kwargs):
     root = Tk()
     root.title("Python Audio YouTube Downloader - Playlist Mode")
     root.geometry("")
-    root.minsize(width=500, height=200)
+    root.minsize(width=500, height=185)
     root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
     
     frame = Frame(root)
@@ -158,12 +153,9 @@ def playlist(*args, **kwargs):
     directoryButton.grid(row=4, column=0, padx=10, pady=10, sticky="sew")
 
     downloadButton = Button(frame, text="Download", command=lambda: (
-        downloadButtonPressed(root, progressLabel, audioFormat.get(), searchEntryText.get(), directory)
+        downloadButtonPressed(root, audioFormat.get(), searchEntryText.get(), directory)
     ))
     downloadButton.grid(row=4, column=1, padx=10, pady=10, sticky="sew")
-
-    progressLabel = Label(frame, text=f"Download progress will appear here.")
-    progressLabel.grid(row=5, column=0, columnspan=2, padx=10, pady=(5,10), sticky="sew")
 
     # custom Windows 11-like theme, pretty cool
     set_theme("dark")

@@ -9,8 +9,3 @@ def download(id, path, *args, **kwargs):
         v.download(filename="output.mp3", output_path=path)
     except:
         pass
-    
-    try:
-        os.copyfile("output.mp3", path + "/output.mp3")
-    except:
-        pass

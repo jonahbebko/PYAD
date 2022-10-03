@@ -111,19 +111,12 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
 
         frames[i] = f
 
-        f.update_idletasks()
-        videoFrame.update_idletasks()
+        root.update()
 
 def directoryButtonPressed(*args, **kwargs):
 
-    folderSelected = filedialog.askdirectory()
-
-    if not folderSelected:
-        messagebox.showerror("Error", "No directory selected.")
-        return
-    
     global directory
-    directory = folderSelected
+    directory = filedialog.askdirectory(text="Select a folder to save the video to.")
 
 def downloadButtonPressed(root, audioFormat, numResults, videoSelected, directory, *args, **kwargs):
     
@@ -238,7 +231,7 @@ def basic(*args, **kwargs):
     audioFormat.set("Download as...")
 
     global directory
-    directory = 0
+    directory = ""
 
     directoryButton = Button(frame, text=" Directory...", image=folderPhoto, compound="left", command=lambda: (
         directoryButtonPressed(),

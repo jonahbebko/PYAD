@@ -1,4 +1,4 @@
-import sys, os
+import sys
 from src.basic import basic
 from src.playlist import playlist
 from src.text import text
@@ -32,7 +32,7 @@ Options:
 
         playlist()
     
-    elif sys.argv[1] in ["-tx", "--text"]:
+    elif sys.argv[1] in ["-t", "--text"]:
         
         text()
 
