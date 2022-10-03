@@ -1,45 +1,91 @@
 from youtubesearchpython import VideosSearch as vs
+from bs4 import BeautifulSoup as bs
+from pytube import Playlist as pl
+import requests as r
+import re
+import json
 
-def search(title:str, num:int):
+def search(title:str, num:int=None, idsOnly=False, titleOnly=False, playlist=False, *args, **kwargs):
 
-    if not num:
-        num = 5
+    if not playlist:
 
-    if "youtube.com" in title or "youtu.be" in title:
-        num = 1
+        if not num:
+            num = 5
 
-    # initialize lists (yes it hurts to look at, i know)
-    thumbs, cthumbs, durs, views, channels, titles, fulltitles, ids = [], [], [], [], [], [], [], []
+        if "youtube.com" in title or "youtu.be" in title:
+            num = 1
 
-    # search for video and add data to lists
-    for video in vs(title, limit=int(num)).result()['result']:
+        # initialize lists (yes it hurts to look at, i know)
+        thumbs, cthumbs, durs, views, channels, titles, fulltitles, ids = [], [], [], [], [], [], [], []
 
-        thumbs.append(video['thumbnails'][0]['url'])
-        cthumbs.append(video['channel']['thumbnails'][0]['url'])
-        durs.append(video['duration'])
-        views.append(video['viewCount']['short'])
+        # search for video and add data to lists
+        for video in vs(title, limit=int(num)).result()['result']:
 
-        # cut off channel/title if too long
-        if len(video['channel']['name']) > 25:
-            channels.append(video['channel']['name'][:22] + "...")
-        else:
-            channels.append(video['channel']['name'])
+            thumbs.append(video['thumbnails'][0]['url'])
+            cthumbs.append(video['channel']['thumbnails'][0]['url'])
+            durs.append(video['duration'])
+            views.append(video['viewCount']['short'])
+
+            # cut off channel/title if too long
+            if len(video['channel']['name']) > 25:
+                channels.append(video['channel']['name'][:22] + "...")
+            else:
+                channels.append(video['channel']['name'])
+            
+            fulltitles.append(video['title'])
+
+            if len(video['title']) > 40:
+                titles.append(video['title'][:37] + '...')
+            else:
+                titles.append(video['title'])
+            
+            ids.append(video['id'])
         
-        fulltitles.append(video['title'])
-
-        if len(video['title']) > 40:
-            titles.append(video['title'][:37] + '...')
+        if idsOnly:
+            return ids
+        elif titleOnly:
+            return titles
         else:
-            titles.append(video['title'])
-        
-        ids.append(video['id'])
+            return thumbs, cthumbs, durs, views, channels, titles, fulltitles, ids
     
-    return thumbs, cthumbs, durs, views, channels, titles, fulltitles, ids
+    else:
+
+        if "spotify.com" in title:
+
+            print("spotify playlist")
+            if "collection/tracks" in title:
+                return ("error", "collection")
+            
+            try:
+                html = r.get(title).text
+            except Exception:
+                return ("error", "request")
+            
+            data = json.loads(re.compile(r"Spotify\.Entity = (.*?);").findall(html)[0])
+
+            idList = []
+            for song in data['tracks']['items']:
+                idList.append(search(song['track']['name'], num=1, idsOnly=True, playlist=False))
+            
+            return idList
+        
+        elif "youtube.com" in title or "youtu.be" in title:
+
+            idList = []
+            
+            for url in pl(title):
+                idList.append(url.split("=")[1])
+            
+            return idList
+        
+        else:
+
+            return ("error", "playlist")
 
 
 
 
-# VIDEO RESULT FORMAT
+# YVS VIDEO RESULT FORMAT
 
 {
     'type': 'video',
