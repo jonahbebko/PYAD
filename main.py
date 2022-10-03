@@ -35,7 +35,7 @@ def main(*args, **kwargs):
     root.title("Select Mode")
     root.geometry("")
     root.minsize(width=360, height=140)
-    root.wm_iconphoto(True, PhotoImage(file="img/icon.ico"))
+    root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
 
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5)
