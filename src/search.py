@@ -1,6 +1,7 @@
 from youtubesearchpython import VideosSearch as vs
 from bs4 import BeautifulSoup as bs
 from pytube import Playlist as pl
+import os
 import requests as r
 import re
 import json
@@ -52,22 +53,8 @@ def search(title:str, num:int=None, idsOnly=False, titleOnly=False, playlist=Fal
 
         if "spotify.com" in title:
 
-            print("spotify playlist")
-            if "collection/tracks" in title:
-                return ("error", "collection")
-            
-            try:
-                html = r.get(title).text
-            except Exception:
-                return ("error", "request")
-            
-            data = json.loads(re.compile(r"Spotify\.Entity = (.*?);").findall(html)[0])
-
-            idList = []
-            for song in data['tracks']['items']:
-                idList.append(search(song['track']['name'], num=1, idsOnly=True, playlist=False))
-            
-            return idList
+            return "spotify"
+            # spotify downloading is managed with spdl
         
         elif "youtube.com" in title or "youtu.be" in title:
 

@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 import pydub
 from .search import search
 from .download import download
@@ -84,8 +85,14 @@ def downloadButtonPressed(root, lastLabel, audioFormat, searchEntry, directory, 
         messagebox.showerror("Error", "Invalid playlist.\n" + \
             "For YouTube playlists, please click \"View Full Playlist\" and copy the URL.")
         return
+    if idList == "spotify":
+        subprocess.Popen(f"spotdl --output-format {audioFormat} -f {searchEntry} -o {directory}", \
+            shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     for i in idList:
+
+        if idList == "spotify":
+            break
 
         title = cleanse(search(i, num=1, titleOnly=True)[0])
         
