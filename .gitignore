@@ -6,6 +6,7 @@
 **/dist
 **/output
 **/venv
+**/downloads
 **/poetry.lock
 **/pyproject.toml
 **/replit.nix
