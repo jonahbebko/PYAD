@@ -5,7 +5,7 @@ PYAD (“pie-ad” - Python YouTube Audio Downloader) is an executable written i
 
 Release - unzip `main.zip` and run `PythonYouTubeAudioDownloader.exe`
 
-Source - run main.py
+Source - run `main.py`
 
 # Changelog
 
