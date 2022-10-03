@@ -1,8 +1,8 @@
+import os
+import sys
 from src.basic import basic
 from src.playlist import playlist
 from src.text import text
-import os
-import sys
 from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
@@ -13,6 +13,15 @@ from tkinter import (
     Tk,
     PhotoImage,
 )
+
+try:
+    import pydub, PIL, urllib, pytube, youtubesearchpython
+except ImportError:
+    import subprocess
+    subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+
+# unimport
+del pydub, PIL, urllib, pytube, youtubesearchpython, subprocess
 
 def resource_path(relative_path):
 
