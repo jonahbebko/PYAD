@@ -11,7 +11,6 @@ from tkinter.ttk import (
     Combobox
 )
 from tkinter import (
-    Tk,
     StringVar,
     PhotoImage,
     filedialog,
@@ -100,9 +99,8 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
     else:
         pass
 
-def text(*args, **kwargs):
+def text(root, *args, **kwargs):
 
-    root = Tk()
     root.title("Python Audio YouTube Downloader - Text Mode")
     root.geometry("")
     root.minsize(width=500, height=145)

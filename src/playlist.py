@@ -13,8 +13,6 @@ from tkinter.ttk import (
     Combobox
 )
 from tkinter import (
-    Tk,
-    Grid,
     StringVar,
     PhotoImage,
     filedialog,
@@ -111,13 +109,11 @@ def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kw
     else:
         pass
 
-def playlist(*args, **kwargs):
+def playlist(root, *args, **kwargs):
 
-    root = Tk()
     root.title("Python Audio YouTube Downloader - Playlist Mode")
     root.geometry("")
     root.minsize(width=500, height=185)
-    root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
     
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5, pady=(0,5))

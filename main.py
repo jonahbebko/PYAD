@@ -1,40 +1,74 @@
-import sys
 from src.basic import basic
 from src.playlist import playlist
 from src.text import text
+import os
+import sys
+from sv_ttk import set_theme
+from tkinter.ttk import (
+    Frame,
+    Button,
+    Label
+)
+from tkinter import (
+    Tk,
+    PhotoImage,
+)
+
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+def destroy(root):
+
+    for widget in root.winfo_children():
+        widget.destroy()
+
 
 def main(*args, **kwargs):
 
-    if len(sys.argv) == 1 or sys.argv[1] in ["-h", "--help"]:
+    root = Tk()
+    root.title("Select Mode")
+    root.geometry("")
+    root.minsize(width=360, height=140)
+    root.wm_iconphoto(True, PhotoImage(file="img/icon.ico"))
 
-        print("""
-./pyad [options] or python3 main.py [options]
-
-Options:
+    frame = Frame(root)
+    frame.pack(fill="both", expand=True, padx=5)
     
-    -h or --help - Show this help message
-    -v or --version - Show version
-    -b or --basic - Basic mode - download one video
-    -p or --playlist - Playlist mode - download from YouTube/Spotify playlist
-    -t or --text - Text mode - read line-by-line from text file
-""")
+    basicButton = Button(frame, text="Basic", command=lambda: (
+        destroy(root),
+        basic(root)
+    ))
+    basicButton.grid(row=0, column=0, padx=5, pady=(10,5), sticky="nsew")
 
-    elif sys.argv[1] in ["-v", "version"]:
+    basicLabel = Label(frame, text="Download a single video.")
+    basicLabel.grid(row=0, column=1, padx=5, pady=(10,5), sticky="nsew")
 
-        print("Python YouTube Audio Downloader - version 2.0.1")
-        print("http://github.com/jonahbebko/PYAD")
+    playlistButton = Button(frame, text="Playlist", command=lambda: (
+        destroy(root),
+        playlist(root)
+    ))
+    playlistButton.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
 
-    elif sys.argv[1] in ["-b", "--basic"]:
+    playlistLabel = Label(frame, text="Download a playlist from YouTube or Spotify.")
+    playlistLabel.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
 
-        basic()
-    
-    elif sys.argv[1] in ["-p", "--playlist"]:
+    textButton = Button(frame, text="Text", command=lambda: (
+        destroy(root),
+        text(root)
+    ))
+    textButton.grid(row=2, column=0, padx=5, pady=(5,10), sticky="nsew")
 
-        playlist()
-    
-    elif sys.argv[1] in ["-t", "--text"]:
-        
-        text()
+    textLabel = Label(frame, text="Download a list of videos from a text file.")
+    textLabel.grid(row=2, column=1, padx=5, pady=(5,10), sticky="nsew")
+
+    set_theme("dark")
+    root.mainloop()
 
 if __name__ == "__main__":
     main()

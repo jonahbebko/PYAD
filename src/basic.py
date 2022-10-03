@@ -14,7 +14,6 @@ from tkinter.ttk import (
     Combobox
 )
 from tkinter import (
-    Tk,
     Grid,
     StringVar,
     PhotoImage,
@@ -172,13 +171,11 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
     else:
         pass
 
-def basic(*args, **kwargs):
+def basic(root, *args, **kwargs):
 
-    root = Tk()
     root.title("Python Audio YouTube Downloader - Basic Mode")
     root.geometry("")
     root.minsize(width=500, height=250)
-    root.wm_iconphoto(True, PhotoImage(file=resource_path("img/icon.ico")))
     
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5)
