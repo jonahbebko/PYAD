@@ -1,6 +1,5 @@
 import os
 import sys
-import subprocess
 import pydub
 from .search import search
 from .download import download
@@ -8,18 +7,15 @@ from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
     Button,
-    Entry,
     Label,
     Combobox
 )
 from tkinter import (
     Tk,
-    Grid,
     StringVar,
     PhotoImage,
     filedialog,
-    messagebox,
-    LEFT
+    messagebox
 )
 
 # pyinstaller magic, idk

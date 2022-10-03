@@ -1,5 +1,4 @@
 from pytube import YouTube as yt
-import os
 
 def download(id, path, *args, **kwargs):
     

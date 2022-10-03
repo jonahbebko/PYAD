@@ -1,10 +1,5 @@
 from youtubesearchpython import VideosSearch as vs
-from bs4 import BeautifulSoup as bs
 from pytube import Playlist as pl
-import os
-import requests as r
-import re
-import json
 
 def search(title:str, num:int=None, idsOnly=False, titleOnly=False, playlist=False, *args, **kwargs):
 
