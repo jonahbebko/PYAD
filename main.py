@@ -1,4 +1,5 @@
 import os
+import sys
 import pydub
 from lib.search import search
 from lib.download import download
@@ -21,6 +22,16 @@ from tkinter import (
     messagebox,
     LEFT
 )
+
+# pyinstaller magic, idk
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def close(root, numResults, *args, **kwargs):
 
