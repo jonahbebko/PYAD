@@ -115,7 +115,7 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
 def directoryButtonPressed(*args, **kwargs):
 
     global directory
-    directory = filedialog.askdirectory(text="Select a folder to save the video to.")
+    directory = filedialog.askdirectory(title="Select a folder to save the video to.")
 
 def downloadButtonPressed(root, audioFormat, numResults, videoSelected, directory, *args, **kwargs):
     

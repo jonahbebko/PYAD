@@ -36,7 +36,7 @@ def close(root, *args, **kwargs):
 
 def directoryButtonPressed(*args, **kwargs):
 
-    folderSelected = filedialog.askdirectory()
+    folderSelected = filedialog.askdirectory(title="Select a directory to save the audio files to.")
 
     if not folderSelected:
         messagebox.showerror("Error", "No directory selected.")
