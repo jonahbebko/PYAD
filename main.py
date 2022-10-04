@@ -1,9 +1,5 @@
-from multiprocessing import resource_tracker
 import os
 import sys
-from src.basic import basic
-from src.playlist import playlist
-from src.text import text
 from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
@@ -16,10 +12,14 @@ from tkinter import (
 )
 
 try:
-    import pydub, PIL, urllib, pytube, youtubesearchpython, spotipy
-except ImportError:
+    import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
+except:
     import subprocess
     subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+finally:
+    from src.basic import basic
+    from src.playlist import playlist
+    from src.text import text
 
 def resource_path(relative_path):
 

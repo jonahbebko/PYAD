@@ -1,6 +1,6 @@
 pydub
 pillow
-urllib
+urllib3
 pytube
 youtube-search-python
 spotipy
