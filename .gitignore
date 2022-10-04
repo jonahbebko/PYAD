@@ -1,10 +1,10 @@
-**/*.exe
 **/*.pyc
 **/__pycache__
 build
 output
 venv
 downloads
+dist/main
 poetry.lock
 pyproject.toml
 replit.nix
