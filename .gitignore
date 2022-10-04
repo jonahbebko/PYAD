@@ -1,16 +1,13 @@
 **/*.exe
 **/*.pyc
 **/__pycache__
-**/temp
 **/build
-**/dist
 **/output
 **/venv
+**/dist
 **/downloads
 **/poetry.lock
 **/pyproject.toml
 **/replit.nix
-**/main.spec
-**/pyinstaller.json
 **/.config
 **/.replit

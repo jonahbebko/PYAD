@@ -6,7 +6,6 @@ from .download import download
 from sv_ttk import set_theme
 from PIL import Image, ImageTk
 from urllib.request import urlretrieve
-from resourcepath import resource_path
 from tkinter.ttk import (
     Frame,
     Button,
@@ -22,6 +21,15 @@ from tkinter import (
     messagebox,
     LEFT
 )
+
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def close(root, numResults, *args, **kwargs):
 

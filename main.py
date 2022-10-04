@@ -1,10 +1,10 @@
+from multiprocessing import resource_tracker
 import os
 import sys
 from src.basic import basic
 from src.playlist import playlist
 from src.text import text
 from sv_ttk import set_theme
-from resourcepath import resource_path
 from tkinter.ttk import (
     Frame,
     Button,
@@ -21,13 +21,24 @@ except ImportError:
     import subprocess
     subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 def destroy(root):
 
     for widget in root.winfo_children():
         widget.destroy()
 
-
 def main(*args, **kwargs):
+
+    if not os.path.exists(resource_path("temp")):
+        os.mkdir(resource_path("temp"))
 
     root = Tk()
     root.title("Select Mode")
