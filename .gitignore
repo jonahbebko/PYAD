@@ -4,7 +4,6 @@
 build
 output
 venv
-dist/main
 downloads
 poetry.lock
 pyproject.toml
