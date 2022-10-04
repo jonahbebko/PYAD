@@ -11,12 +11,12 @@ Build-It-Yourself - run `pyinstaller main.spec` in terminal
 
 # Changelog
 
-2.1.1 includes a standalone executable
+v2.1.1 includes a standalone executable
 
-2.1.0 adds two new features: playlist downloading, and text file downloading.
+v2.1.0 adds two new features: playlist downloading, and text file downloading.
 
-2.0.0 is a complete GUI rewrite of 1.0.0, now with tkinter and more formats.
+v2.0.0 is a complete GUI rewrite of 1.0.0, now with tkinter and more formats.
 
-1.0.0 is a simple console-based executable.
+v1.0.0 is a simple console-based executable.
 
 No rights reserved. Do what you wish.
