@@ -83,12 +83,12 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
 
         # convert to audio format
         if audioFormat != "mp3":
-
             audio = pydub.AudioSegment.from_file(f"{outDirectory}/output.mp3")
-            audio.export(f"{outDirectory}/output.{audioFormat}", format=audioFormat)
+            audio.export(f"{outDirectory}/{cleanse(line)}.{audioFormat}", format=audioFormat)
             os.remove(f"{outDirectory}/output.mp3")
         
-        os.rename(f"{outDirectory}/output.{audioFormat}", f"{outDirectory}/{cleanse(line)}.{audioFormat}")
+        else:
+            os.rename(f"{outDirectory}/output.mp3", f"{outDirectory}/{cleanse(line)}.mp3")
 
         lastDownloaded.config(text=f"Last downloaded: {line}")
         root.update()

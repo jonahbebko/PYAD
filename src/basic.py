@@ -160,10 +160,11 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
 
     # convert from mp3 if other format selected
     if audioFormat != "mp3":
-        pydub.AudioSegment.from_file(resource_path("output.mp3")).export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
-        os.remove(resource_path("output.mp3"))
+        pydub.AudioSegment.from_file(f"{directory}/output.mp3").export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
+        os.remove(f"{directory}/output.mp3")
     
-    os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
+    else:
+        os.rename(f"{directory}/output.mp3", f"{directory}/{title}.mp3")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root, numResults)
