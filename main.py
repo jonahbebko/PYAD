@@ -23,8 +23,8 @@ def resource_path(relative_path):
 try:
     import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
 except:
-    from pip._internal import main as pip
-    pip(["install", "-r", "requirements.txt"])
+    import subprocess
+    subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 finally:
     from src.basic import basic
     from src.playlist import playlist
