@@ -11,16 +11,6 @@ from tkinter import (
     PhotoImage,
 )
 
-try:
-    import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
-except:
-    import subprocess
-    subprocess.call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
-finally:
-    from src.basic import basic
-    from src.playlist import playlist
-    from src.text import text
-
 def resource_path(relative_path):
 
     try:
@@ -29,6 +19,18 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+try:
+    import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
+except:
+    import subprocess
+    path = resource_path("requirements.txt")
+    subprocess.call([sys.executable, "-m", "pip", "install", "-r", path])
+finally:
+    from src.basic import basic
+    from src.playlist import playlist
+    from src.text import text
+
 
 def destroy(root):
 
