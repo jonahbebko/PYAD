@@ -1,6 +1,5 @@
 from pytube import YouTube as yt
-
-from main import resource_path
+from .resourcepath import resource_path
 
 def download(id, *args, **kwargs):
     

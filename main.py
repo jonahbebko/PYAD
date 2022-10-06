@@ -1,6 +1,7 @@
 import os
 import sys
 from sv_ttk import set_theme
+from src.resourcepath import resource_path
 from tkinter.ttk import (
     Frame,
     Button,
@@ -10,15 +11,6 @@ from tkinter import (
     Tk,
     PhotoImage,
 )
-
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 
 try:
     import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy

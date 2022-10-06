@@ -1,6 +1,7 @@
 import os
 import sys
 import pydub
+from .resourcepath import resource_path
 from .search import search
 from .download import download
 from sv_ttk import set_theme
@@ -16,15 +17,6 @@ from tkinter import (
     filedialog,
     messagebox
 )
-
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
 
 def close(root, *args, **kwargs):
     
