@@ -101,7 +101,6 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
         frames[i] = f
 
         root.update()
-        root.minsize(width=500, height=250+(50*(i+1)))
 
 def directoryButtonPressed(*args, **kwargs):
 
@@ -173,7 +172,7 @@ def basic(root, *args, **kwargs):
 
     root.title("Python Audio YouTube Downloader - Basic Mode")
     root.geometry("")
-    root.minsize(width=500, height=250)
+    root.minsize(width=500, height=300)
     
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5)
