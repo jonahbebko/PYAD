@@ -11,9 +11,7 @@ Build-It-Yourself - run `pyinstaller main.spec` in terminal
 
 # Changelog
 
-v2.1.2 fixes some bugs with executable
-
-v2.1.1 includes a standalone executable
+v2.1.x releases are just bug fixes
 
 v2.1.0 adds two new features: playlist downloading, and text file downloading.
 
