@@ -1,5 +1,4 @@
 import os
-import resource
 import sys
 import pydub
 from .search import search
