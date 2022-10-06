@@ -1,4 +1,5 @@
 import os
+import resource
 import sys
 import pydub
 from .search import search
@@ -144,10 +145,13 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
         return
     
     try:
-        download(idList[int(videoSelected)], directory)
+        download(idList[int(videoSelected)])
     except FileExistsError:
-        messagebox.showinfo("Info", "mp3 file already exists in directory.\nThis isn't an error, just letting you know.")
-        pass
+        messagebox.showerror("Error", "File already exists.")
+        return
+    except:
+        messagebox.showerror("Error", "Error with download. Please try again.")
+        return
 
     # cleanse
     title = (
@@ -160,11 +164,14 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
 
     # convert from mp3 if other format selected
     if audioFormat != "mp3":
-        pydub.AudioSegment.from_file(f"{directory}/output.mp3").export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
-        os.remove(f"{directory}/output.mp3")
+        
+        pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{directory}/output.{audioFormat}", format=audioFormat)
+        os.remove(resource_path("temp/output.mp3"))
     
-    else:
-        os.rename(f"{directory}/output.mp3", f"{directory}/{title}.mp3")
+    try:
+        os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
+    except FileExistsError:
+        messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}. Skipping...")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root, numResults)

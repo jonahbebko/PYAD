@@ -1,4 +1,5 @@
 import os
+import resource
 import sys
 import subprocess
 import pydub
@@ -91,17 +92,17 @@ def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kw
 
         title = cleanse(search(i, num=1, titleOnly=True)[0])
         
-        download(i, directory)
+        download(i)
 
         if audioFormat != "mp3":
         
-            pydub.AudioSegment.from_file(f"{directory}/output.mp3").export(f"{directory}/output.{audioFormat}", format=audioFormat)
-            os.remove(f"{directory}/output.mp3")
+            pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{directory}/output.{audioFormat}", format=audioFormat)
+            os.remove(resource_path("temp/output.mp3"))
         
         try:
             os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
         except FileExistsError:
-            messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}, skipping...")
+            messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}. Skipping...")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root)

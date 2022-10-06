@@ -79,18 +79,22 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
             continue
 
         vid = search(line, num=1, idsOnly=True)[0]
-        download(vid, outDirectory)
+        download(vid)
+
+        title = cleanse(line)
 
         # convert to audio format
         if audioFormat != "mp3":
-            audio = pydub.AudioSegment.from_file(f"{outDirectory}/output.mp3")
-            audio.export(f"{outDirectory}/{cleanse(line)}.{audioFormat}", format=audioFormat)
-            os.remove(f"{outDirectory}/output.mp3")
         
-        else:
-            os.rename(f"{outDirectory}/output.mp3", f"{outDirectory}/{cleanse(line)}.mp3")
+            pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{outDirectory}/output.{audioFormat}", format=audioFormat)
+            os.remove(resource_path("temp/output.mp3"))
+        
+        try:
+            os.rename(f"{outDirectory}/output.{audioFormat}", f"{outDirectory}/{title}.{audioFormat}")
+        except FileExistsError:
+            messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {outDirectory}. Skipping...")
 
-        lastDownloaded.config(text=f"Last downloaded: {line}")
+        lastDownloaded.config(text=f"Last downloaded: {title}.{audioFormat}")
         root.update()
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
