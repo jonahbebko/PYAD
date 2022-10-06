@@ -101,6 +101,7 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
         frames[i] = f
 
         root.update()
+        root.minsize(width=500, height=250+(50*(i+1)))
 
 def directoryButtonPressed(*args, **kwargs):
 
