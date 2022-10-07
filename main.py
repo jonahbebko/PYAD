@@ -1,7 +1,5 @@
-import os
-import sys
+import os, sys
 from sv_ttk import set_theme
-from src.resourcepath import resource_path
 from tkinter.ttk import (
     Frame,
     Button,
@@ -11,6 +9,15 @@ from tkinter import (
     Tk,
     PhotoImage,
 )
+
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 try:
     import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
@@ -22,7 +29,6 @@ finally:
     from src.playlist import playlist
     from src.text import text
 
-
 def destroy(root):
 
     for widget in root.winfo_children():
@@ -30,8 +36,10 @@ def destroy(root):
 
 def main(*args, **kwargs):
 
-    if not os.path.exists(resource_path("temp")):
+    try:
+        os.mkdir("temp")
         os.mkdir(resource_path("temp"))
+    except: pass
 
     root = Tk()
     root.title("Select Mode")

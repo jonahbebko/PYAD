@@ -4,6 +4,7 @@ import subprocess
 import pydub
 from .search import search
 from .download import download
+from .cleanse import cleanse
 from sv_ttk import set_theme
 from tkinter.ttk import (
     Frame,
@@ -44,14 +45,6 @@ def directoryButtonPressed(*args, **kwargs):
     global directory
     directory = folderSelected
 
-def cleanse(title:str, *args, **kwargs):
-
-    for i in ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]:
-        title = title.replace(i, "-")
-    title = title.replace(" ", "_")
-
-    return title
-
 def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kwargs):
     
     if searchEntry == "":
@@ -89,19 +82,24 @@ def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kw
         if idList == "spotify":
             break
 
-        title = cleanse(search(i, num=1, titleOnly=True)[0])
+        title = cleanse(search(i, num=1, titleOnly=True)[0].strip())
         
-        download(i)
+        try:
+            download(id=i, title="output.mp3", path=resource_path("temp/"))
+        except FileExistsError:
+            messagebox.showerror("Error", f"File {title} already exists. Skipping...")
+            pass
 
         if audioFormat != "mp3":
         
-            pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{directory}/output.{audioFormat}", format=audioFormat)
+            f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+            f.export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
             os.remove(resource_path("temp/output.mp3"))
         
-        try:
-            os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
-        except FileExistsError:
-            messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}. Skipping...")
+        else:
+
+            # rename can also be used to move file
+            os.rename(resource_path("temp/output.mp3"), f"{directory}/{title}.mp3")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root)

@@ -1,8 +1,8 @@
-import os
+import os, sys
 import pydub
-from .resourcepath import resource_path
 from .search import search
 from .download import download
+from .cleanse import cleanse
 from sv_ttk import set_theme
 from PIL import Image, ImageTk
 from urllib.request import urlretrieve
@@ -22,13 +22,23 @@ from tkinter import (
     LEFT
 )
 
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 def close(root, numResults, *args, **kwargs):
 
     if not numResults:
         root.destroy()
         return
 
-    for i in range(int(numResults)):
+    # temp files only go up to 10
+    for i in range(10):
         try:
             os.remove(resource_path(f"temp/{i}.png"))
             os.remove(resource_path(f"temp/{i}c.png"))
@@ -75,7 +85,7 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
         urlretrieve(cthumbs[i], resource_path(f"temp/{i}c.png"))
         cimg = ImageTk.PhotoImage(Image.open(resource_path(f"temp/{i}c.png")).resize((50, 50)))
 
-        identifier = Label(f, text=i, font=("Arial", 24))
+        identifier = Label(f, text=(i+1), font=("Arial", 24))
         identifier.grid(row=0, column=0, rowspan=3, padx=(10,5), pady=5, sticky="nsw")
 
         thumbnail = Label(f, image=img)
@@ -109,6 +119,8 @@ def directoryButtonPressed(*args, **kwargs):
 
 def downloadButtonPressed(root, audioFormat, numResults, videoSelected, directory, *args, **kwargs):
     
+    videoSelected = int(videoSelected) - 1
+
     if videoSelected == "":
         messagebox.showerror("Error", "No video selected.")
         return
@@ -119,7 +131,7 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
         messagebox.showerror("Error", "Video selection must be an integer.")
         return
     
-    if int(videoSelected)+1 > int(numResults):
+    if int(videoSelected) > int(numResults):
         messagebox.showerror("Error", "Video selection out of range.")
         return
 
@@ -134,34 +146,34 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
         messagebox.showerror("Error", "No directory selected.")
         return
     
+    # make title safe for file system
+    title = cleanse(ftitleList[videoSelected].strip())
+
     try:
-        download(idList[int(videoSelected)])
+        download(idList[int(videoSelected)], title="output.mp3", path=resource_path("temp/"))
     except FileExistsError:
         messagebox.showerror("Error", "File already exists.")
         return
-    except:
-        messagebox.showerror("Error", "Error with download. Please try again.")
+    except Exception as e:
+        messagebox.showerror("Error", f"Error with download. Please try again.\n{e}")
         return
 
-    # cleanse
-    title = (
-        ftitleList[int(videoSelected)]
-        .replace("/", "-").replace("\\", "-").replace(":", "-")
-        .replace("*", "-").replace("?", "-").replace("\"", "-")
-        .replace("<", "-").replace(">", "-").replace("|", "-")
-        .replace(" ", "_")
-    )
+    try:
+        os.rename("temp/output.mp3", resource_path("temp/output.mp3"))
+    except:
+        pass
 
     # convert from mp3 if other format selected
     if audioFormat != "mp3":
         
-        pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{directory}/output.{audioFormat}", format=audioFormat)
+        f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+        f.export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
         os.remove(resource_path("temp/output.mp3"))
     
-    try:
-        os.rename(f"{directory}/output.{audioFormat}", f"{directory}/{title}.{audioFormat}")
-    except FileExistsError:
-        messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {directory}. Skipping...")
+    else:
+
+        # rename can also be used to move file
+        os.rename(resource_path("temp/output.mp3"), f"{directory}/{title}.mp3")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root, numResults)

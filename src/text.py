@@ -1,7 +1,5 @@
-import os
-import sys
+import os, sys
 import pydub
-from .resourcepath import resource_path
 from .search import search
 from .download import download
 from sv_ttk import set_theme
@@ -17,6 +15,15 @@ from tkinter import (
     filedialog,
     messagebox
 )
+
+def resource_path(relative_path):
+
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 def close(root, *args, **kwargs):
     
@@ -65,26 +72,32 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
     
     for line in lines:
 
-        line = line.strip()
+        line = cleanse(line.strip())
 
         if not line:
             continue
 
         vid = search(line, num=1, idsOnly=True)[0]
-        download(vid)
 
         title = cleanse(line)
 
         # convert to audio format
+        try:
+            download(id=vid, title="output.mp3", path=resource_path("temp/"))
+        except FileExistsError:
+            messagebox.showerror("Error", f"File {title} already exists. Skipping...")
+            pass
+
         if audioFormat != "mp3":
         
-            pydub.AudioSegment.from_file(resource_path("temp/output.mp3")).export(f"{outDirectory}/output.{audioFormat}", format=audioFormat)
+            f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+            f.export(f"{outDirectory}/{title}.{audioFormat}", format=audioFormat)
             os.remove(resource_path("temp/output.mp3"))
         
-        try:
-            os.rename(f"{outDirectory}/output.{audioFormat}", f"{outDirectory}/{title}.{audioFormat}")
-        except FileExistsError:
-            messagebox.showinfo("Error", f"File {title}.{audioFormat} already exists in {outDirectory}. Skipping...")
+        else:
+
+            # rename can also be used to move file
+            os.rename(resource_path("temp/output.mp3"), f"{outDirectory}/{title}.mp3")
 
         lastDownloaded.config(text=f"Last downloaded: {title}.{audioFormat}")
         root.update()
