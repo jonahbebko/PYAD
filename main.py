@@ -27,10 +27,6 @@ def destroy(root):
 
 def main(*args, **kwargs):
 
-    try:
-        os.mkdir("temp")
-    except: pass
-
     root = Tk()
     root.title("Select Mode")
     root.geometry("")
