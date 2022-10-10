@@ -10,15 +10,6 @@ from tkinter import (
     PhotoImage,
 )
 
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 try:
     import pydub, PIL, urllib3, pytube, youtubesearchpython, spotipy
 except:
@@ -38,14 +29,13 @@ def main(*args, **kwargs):
 
     try:
         os.mkdir("temp")
-        os.mkdir(resource_path("temp"))
     except: pass
 
     root = Tk()
     root.title("Select Mode")
     root.geometry("")
     root.minsize(width=360, height=140)
-    root.wm_iconphoto(True, PhotoImage(file=resource_path("img\icon.ico")))
+    root.wm_iconphoto(True, PhotoImage(file="img\icon.ico"))
 
     frame = Frame(root)
     frame.pack(fill="both", expand=True, padx=5)

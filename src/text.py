@@ -15,16 +15,6 @@ from tkinter import (
     filedialog,
     messagebox
 )
-
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 def close(root, *args, **kwargs):
     
     root.destroy()
@@ -83,21 +73,21 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
 
         # convert to audio format
         try:
-            download(id=vid, title="output.mp3", path=resource_path("temp/"))
+            download(id=vid, title="output.mp3", path="temp/")
         except FileExistsError:
             messagebox.showerror("Error", f"File {title} already exists. Skipping...")
             pass
 
         if audioFormat != "mp3":
         
-            f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+            f = pydub.AudioSegment.from_mp3("temp/output.mp3")
             f.export(f"{outDirectory}/{title}.{audioFormat}", format=audioFormat)
-            os.remove(resource_path("temp/output.mp3"))
+            os.remove("temp/output.mp3")
         
         else:
 
             # rename can also be used to move file
-            os.rename(resource_path("temp/output.mp3"), f"{outDirectory}/{title}.mp3")
+            os.rename("temp/output.mp3", f"{outDirectory}/{title}.mp3")
 
         lastDownloaded.config(text=f"Last downloaded: {title}.{audioFormat}")
         root.update()
@@ -120,7 +110,7 @@ def text(root, *args, **kwargs):
     frame.grid_columnconfigure(1, weight=1)
     
     # .subsample is used to resize the image
-    folderPhoto = PhotoImage(file=resource_path("./img/yellow.png")).subsample(16,16)
+    folderPhoto = PhotoImage(file="./img/yellow.png").subsample(16,16)
 
     audioFormat = StringVar()
 

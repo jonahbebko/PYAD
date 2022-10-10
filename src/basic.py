@@ -1,4 +1,4 @@
-import os, sys
+import os
 import pydub
 from .search import search
 from .download import download
@@ -22,15 +22,6 @@ from tkinter import (
     LEFT
 )
 
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 def close(root, numResults, *args, **kwargs):
 
     if not numResults:
@@ -40,8 +31,8 @@ def close(root, numResults, *args, **kwargs):
     # temp files only go up to 10
     for i in range(10):
         try:
-            os.remove(resource_path(f"temp/{i}.png"))
-            os.remove(resource_path(f"temp/{i}c.png"))
+            os.remove(f"temp/{i}.png")
+            os.remove(f"temp/{i}c.png")
         except:
             pass
     
@@ -79,11 +70,11 @@ def searchButtonPressed(root, videoFrame, searchEntryText, numResults, *args, **
 
         f.columnconfigure(2, weight=1)
 
-        urlretrieve(thumbs[i], resource_path(f"temp/{i}.png"))
-        img = ImageTk.PhotoImage(Image.open(resource_path(f"temp/{i}.png")).resize((100, 50)))
+        urlretrieve(thumbs[i], f"temp/{i}.png")
+        img = ImageTk.PhotoImage(Image.open(f"temp/{i}.png").resize((100, 50)))
 
-        urlretrieve(cthumbs[i], resource_path(f"temp/{i}c.png"))
-        cimg = ImageTk.PhotoImage(Image.open(resource_path(f"temp/{i}c.png")).resize((50, 50)))
+        urlretrieve(cthumbs[i], f"temp/{i}c.png")
+        cimg = ImageTk.PhotoImage(Image.open(f"temp/{i}c.png").resize((50, 50)))
 
         identifier = Label(f, text=(i+1), font=("Arial", 24))
         identifier.grid(row=0, column=0, rowspan=3, padx=(10,5), pady=5, sticky="nsw")
@@ -150,7 +141,7 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
     title = cleanse(ftitleList[videoSelected].strip())
 
     try:
-        download(idList[int(videoSelected)], title="output.mp3", path=resource_path("temp/"))
+        download(idList[int(videoSelected)], title="output.mp3", path="temp/")
     except FileExistsError:
         messagebox.showerror("Error", "File already exists.")
         return
@@ -159,21 +150,21 @@ def downloadButtonPressed(root, audioFormat, numResults, videoSelected, director
         return
 
     try:
-        os.rename("temp/output.mp3", resource_path("temp/output.mp3"))
+        os.rename("temp/output.mp3", "temp/output.mp3")
     except:
         pass
 
     # convert from mp3 if other format selected
     if audioFormat != "mp3":
         
-        f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+        f = pydub.AudioSegment.from_mp3("temp/output.mp3")
         f.export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
-        os.remove(resource_path("temp/output.mp3"))
+        os.remove("temp/output.mp3")
     
     else:
 
         # rename can also be used to move file
-        os.rename(resource_path("temp/output.mp3"), f"{directory}/{title}.mp3")
+        os.rename("temp/output.mp3", f"{directory}/{title}.mp3")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root, numResults)
@@ -227,7 +218,7 @@ def basic(root, *args, **kwargs):
     selectEntry.grid(row=6, column=0, padx=10, pady=(5,10), sticky="new")
 
     # .subsample is used to resize the image
-    folderPhoto = PhotoImage(file=resource_path("./img/yellow.png")).subsample(16,16)
+    folderPhoto = PhotoImage(file="./img/yellow.png").subsample(16,16)
 
     availableFormats = ["mp3", "wav", "ogg", "flac", "aac"]
 

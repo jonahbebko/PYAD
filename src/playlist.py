@@ -21,15 +21,6 @@ from tkinter import (
     LEFT
 )
 
-def resource_path(relative_path):
-
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
-
 def close(root, *args, **kwargs):
     
     root.destroy()
@@ -85,21 +76,21 @@ def downloadButtonPressed(root, audioFormat, searchEntry, directory, *args, **kw
         title = cleanse(search(i, num=1, titleOnly=True)[0].strip())
         
         try:
-            download(id=i, title="output.mp3", path=resource_path("temp/"))
+            download(id=i, title="output.mp3", path="temp/")
         except FileExistsError:
             messagebox.showerror("Error", f"File {title} already exists. Skipping...")
             pass
 
         if audioFormat != "mp3":
         
-            f = pydub.AudioSegment.from_mp3(resource_path("temp/output.mp3"))
+            f = pydub.AudioSegment.from_mp3("temp/output.mp3")
             f.export(f"{directory}/{title}.{audioFormat}", format=audioFormat)
-            os.remove(resource_path("temp/output.mp3"))
+            os.remove("temp/output.mp3")
         
         else:
 
             # rename can also be used to move file
-            os.rename(resource_path("temp/output.mp3"), f"{directory}/{title}.mp3")
+            os.rename("temp/output.mp3", f"{directory}/{title}.mp3")
     
     if messagebox.askquestion("Success", "Download complete. Close program?") == "yes":
         close(root)
@@ -127,7 +118,7 @@ def playlist(root, *args, **kwargs):
     searchEntry.grid(row=1, column=0, columnspan=2, padx=10, pady=(5,10), sticky="new")
 
     # .subsample is used to resize the image
-    folderPhoto = PhotoImage(file=resource_path("./img/yellow.png")).subsample(16,16)
+    folderPhoto = PhotoImage(file="./img/yellow.png").subsample(16,16)
 
     availableFormats = ["mp3", "wav", "ogg", "flac", "aac"]
 
