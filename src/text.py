@@ -56,7 +56,7 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
     for line in lines:
         if line.startswith("#"):
             lines.remove(line)
-        if not line:
+        elif not line.strip():
             lines.remove(line)
     
     for line in lines:
