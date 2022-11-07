@@ -4,5 +4,5 @@ def cleanse(title):
         .replace("/", "-").replace("\\", "-").replace(":", "-")
         .replace("*", "-").replace("?", "-").replace("\"", "-")
         .replace("<", "-").replace(">", "-").replace("|", "-")
-        .replace(" ", "_")
+        .replace("\n", "").replace(" ", "_")
     )
