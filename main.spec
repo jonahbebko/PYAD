@@ -4,7 +4,7 @@ block_cipher = None
 
 added_data = [
     ('src/*', 'src'),
-    ('img/*', '.'),
+    ('img/*', 'img'),
     ('sv_ttk/*', 'sv_ttk'),
     ('sv_ttk/theme/*', 'sv_ttk/theme'),
 ]
