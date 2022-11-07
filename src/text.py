@@ -47,22 +47,13 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
         return
     
     with open(inDirectory, "r") as f:
-        lines = f.readlines()
+        lines = [line.replace("\n", "") for line in f if (not line.startswith("#")) or (not line.strip())]
     
     if not lines:
         messagebox.showerror("Error", "Input file is empty.")
         return
     
     for line in lines:
-        if line.startswith("#"):
-            lines.remove(line)
-        elif not line.strip():
-            lines.remove(line)
-    
-    for line in lines:
-
-        if not line:
-            continue
 
         vid = search(line, num=1, idsOnly=True)[0]
 
