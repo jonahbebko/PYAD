@@ -7,6 +7,7 @@ added_data = [
     ('img/*', 'img'),
     ('sv_ttk/*', 'sv_ttk'),
     ('sv_ttk/theme/*', 'sv_ttk/theme'),
+    ('temp', 'temp'),
 ]
 
 a = Analysis(
