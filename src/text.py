@@ -60,6 +60,11 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
         messagebox.showerror("Error", "Input file is empty.")
         return
     
+    # loop through each line, if it starts with a hashtag, remove the entire line
+    for line in lines:
+        if line.startswith("#"):
+            lines.remove(line)
+    
     for line in lines:
 
         line = cleanse(line.strip())
