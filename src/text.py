@@ -2,8 +2,8 @@ import os
 import pydub
 from .search import search
 from .download import download
+from .cleanse import cleanse
 from sv_ttk import set_theme
-from cleanse import cleanse
 from tkinter.ttk import (
     Frame,
     Button,
