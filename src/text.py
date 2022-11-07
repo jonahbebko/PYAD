@@ -55,6 +55,8 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
     
     for line in lines:
 
+        if not line: continue
+
         vid = search(line, num=1, idsOnly=True)[0]
 
         title = cleanse(line)
