@@ -5,6 +5,7 @@ output
 venv
 downloads
 dist/PythonYouTubeAudioDownloader
+temp/output.mp3
 poetry.lock
 pyproject.toml
 replit.nix
