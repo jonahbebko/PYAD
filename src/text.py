@@ -67,8 +67,6 @@ def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDir
     
     for line in lines:
 
-        line = cleanse(line.strip())
-
         if not line:
             continue
 
