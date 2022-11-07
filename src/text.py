@@ -1,8 +1,9 @@
-import os, sys
+import os
 import pydub
 from .search import search
 from .download import download
 from sv_ttk import set_theme
+from cleanse import cleanse
 from tkinter.ttk import (
     Frame,
     Button,
@@ -28,14 +29,6 @@ def directoryOutButtonPressed(*args, **kwargs):
 
     global outDirectory
     outDirectory = filedialog.askdirectory(title="Select a directory to save to.")
-
-def cleanse(title:str, *args, **kwargs):
-
-    for i in ["\\", "/", ":", "*", "?", '"', "<", ">", "|"]:
-        title = title.replace(i, "-")
-    title = title.replace(" ", "_")
-
-    return title
 
 def downloadButtonPressed(root, lastDownloaded, audioFormat, inDirectory, outDirectory, *args, **kwargs):
 
