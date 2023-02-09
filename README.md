@@ -1,5 +1,5 @@
 # Overview
-PYAD (“pie-ad” - Python YouTube Audio Downloader) is an executable written in Python to search for YouTube videos and download them as audio. 
+PYAD (Python YouTube Audio Downloader) is an executable written in Python to search for YouTube videos and download them as audio. 
 
 # Usage
 
